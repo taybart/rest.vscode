@@ -1,0 +1,19 @@
+# start a server with `rest -s -a :18080`
+locals {
+ test = "test"
+}
+request "basic" {
+  url = "http://localhost:18080/hello-world"
+  method = "POST"
+  headers = {
+    "Content-Type" = "application/json"
+    "X-Test" = "${locals.test}"
+  }
+  body = {
+    data: "hello world"
+  }
+  post_hook = <<LUA
+    local body = json.decode(rest.res.body)
+    print(body.status)
+  LUA
+}

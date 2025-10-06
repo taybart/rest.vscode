@@ -1,0 +1,17 @@
+src
+**/.vscode
+**/.vscode-test
+**/.git
+**/.gitignore
+**/node_modules/*
+!node_modules/vscode-languageclient/**
+!node_modules/vscode-languageserver/**
+**/test/**
+**/*.map
+**/*.ts
+!dist/**/*.js
+!media/**
+vendor/**
+scripts/**
+
+

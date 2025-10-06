@@ -1,0 +1,67 @@
+{
+  "name": "rest",
+  "displayName": "rest runner",
+  "description": "Adds a CodeLens to execute rest requests via `rest`",
+  "version": "0.0.1",
+  "publisher": "taybart",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.84.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:rest",
+    "workspaceContains:**/*.{rest}",
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "rest",
+        "aliases": [
+          "REST",
+          "rest"
+        ],
+        "extensions": [
+          ".rest"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "rest",
+        "scopeName": "source.rest",
+        "path": "./syntaxes/rest.tmLanguage.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "restRunner.runRequest",
+        "title": "Run request",
+        "category": "REST Runner"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package",
+    "clean:build": "rm -rf vendor/",
+    "validate:grammar": "node scripts/validate-grammar.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.19",
+    "@types/vscode": "^1.104.0",
+    "typescript": "^5.9.3",
+    "vsce": "^2.15.0",
+    "vscode-textmate": "^9.2.1"
+  },
+  "keywords": [],
+  "author": "",
+  "type": "commonjs"
+}

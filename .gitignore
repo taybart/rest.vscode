@@ -1,0 +1,7 @@
+node_modules
+dist
+media/*.wasm
+vendor/
+.DS_Store
+
+

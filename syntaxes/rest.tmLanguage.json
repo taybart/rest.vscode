@@ -1,0 +1,204 @@
+{
+  "scopeName": "source.rest",
+  "fileTypes": ["rest"],
+  "patterns": [
+    {
+      "include": "#block"
+    },
+    {
+      "include": "#localsBlock"
+    },
+    {
+      "include": "#attribute"
+    },
+    {
+      "include": "#string"
+    },
+    {
+      "include": "#number"
+    },
+    {
+      "include": "#boolean"
+    },
+    {
+      "include": "#comment"
+    }
+  ],
+  "repository": {
+    "block": {
+      "patterns": [
+        {
+          "begin": "\\b(request)\\s+(?:\"[^\"]+\"|[A-Za-z_][A-Za-z0-9_-]*)\\s*\\{",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.control.rest"
+            }
+          },
+          "end": "\\}",
+          "patterns": [
+            {
+              "include": "#string"
+            },
+            {
+              "include": "#attribute"
+            },
+            {
+              "include": "#heredoc"
+            },
+            {
+              "include": "#object"
+            }
+          ]
+        }
+      ]
+    },
+    "localsBlock": {
+      "patterns": [
+        {
+          "begin": "\\b(locals)\\s*\\{",
+          "beginCaptures": {
+            "1": { "name": "keyword.control.rest" }
+          },
+          "end": "\\}",
+          "patterns": [
+            { "include": "#attribute" },
+            { "include": "#string" },
+            { "include": "#number" },
+            { "include": "#boolean" },
+            { "include": "#object" }
+          ]
+        }
+      ]
+    },
+    "attribute": {
+      "patterns": [
+        {
+          "match": "\\b([a-zA-Z_][a-zA-Z0-9_-]*)\\s*=",
+          "captures": {
+            "1": {
+              "name": "variable.other.readwrite.rest"
+            }
+          }
+        }
+      ]
+    },
+    "string": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.rest",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.rest",
+              "match": "\\\\."
+            },
+            { "include": "#interpolation" }
+          ]
+        }
+      ]
+    },
+    "interpolation": {
+      "patterns": [
+        {
+          "name": "meta.interpolation.rest",
+          "begin": "\\$\\{",
+          "beginCaptures": {
+            "0": { "name": "punctuation.section.embedded.begin.rest" }
+          },
+          "end": "\\}",
+          "endCaptures": {
+            "0": { "name": "punctuation.section.embedded.end.rest" }
+          },
+          "patterns": [
+            {
+              "name": "variable.other.member.rest",
+              "match": "\\blocals\\.[a-zA-Z_][a-zA-Z0-9_]*\\b"
+            },
+            {
+              "name": "variable.other.readwrite.rest",
+              "match": "[a-zA-Z_][a-zA-Z0-9_]*"
+            }
+          ]
+        }
+      ]
+    },
+    "number": {
+      "patterns": [
+        {
+          "name": "constant.numeric.rest",
+          "match": "\\b\\d+(\\.\\d+)?\\b"
+        }
+      ]
+    },
+    "boolean": {
+      "patterns": [
+        {
+          "name": "constant.language.boolean.rest",
+          "match": "\\b(true|false)\\b"
+        }
+      ]
+    },
+    "comment": {
+      "patterns": [
+        {
+          "name": "comment.line.number-sign.rest",
+          "begin": "#",
+          "end": "$"
+        }
+      ]
+    },
+    "object": {
+      "patterns": [
+        {
+          "begin": "\\{",
+          "end": "\\}",
+          "patterns": [
+            {
+              "include": "#attribute"
+            },
+            {
+              "include": "#string"
+            },
+            {
+              "include": "#number"
+            },
+            {
+              "include": "#boolean"
+            },
+            {
+              "include": "#object"
+            }
+          ]
+        }
+      ]
+    },
+    "heredoc": {
+      "patterns": [
+        {
+          "begin": "(<<)\\s*(LUA)\\b",
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.definition.heredoc.rest"
+            },
+            "2": {
+              "name": "keyword.control.heredoc.rest"
+            }
+          },
+          "end": "\\b(LUA)\\b",
+          "endCaptures": {
+            "1": {
+              "name": "keyword.control.heredoc.rest"
+            }
+          },
+          "contentName": "source.lua.embedded.rest",
+          "patterns": [
+            {
+              "include": "source.lua"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
