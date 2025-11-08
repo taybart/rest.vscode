@@ -12,7 +12,7 @@ request "basic" {
   body = {
     data: "hello world"
   }
-  post_hook = <<LUA
+  after = <<LUA
     local body = json.decode(rest.res.body)
     print(body.status)
   LUA
